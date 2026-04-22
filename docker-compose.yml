@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: salainensalasana
-      POSTGRES_DB: blogdb
+      PGSSLMODE: disable
     volumes:
       - ./pgdata:/var/lib/postgresql
     container_name: postgres
