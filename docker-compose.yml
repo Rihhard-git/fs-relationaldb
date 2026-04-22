@@ -1,0 +1,12 @@
+services:
+  database:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: salainensalasana
+      POSTGRES_DB: blogdb
+    volumes:
+      - ./pgdata:/var/lib/postgresql
+    container_name: postgres
