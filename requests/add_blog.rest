@@ -1,7 +1,9 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJpaGhhcmRAbWFpbC5jb20iLCJpZCI6NCwiaWF0IjoxNzc3MDY2NDg3fQ.6AxLclotPRERPSeIpIYKHF1ze_e7LgX_ojas77N5e1w
 
 {
-    "title": "To be deleted",
-    "author": "Rain Veskus"
+    "title": "To Not Be Deleted",
+    "author": "Weirdo",
+    "url": "fullstackisfun.com"
 }
