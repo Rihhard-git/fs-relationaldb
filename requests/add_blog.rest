@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJpaGhhcmRAbWFpbC5jb20iLCJpZCI6NCwiaWF0IjoxNzc3MDY2NDg3fQ.6AxLclotPRERPSeIpIYKHF1ze_e7LgX_ojas77N5e1w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJpaGhhcmRAbWFpbC5jb20iLCJpZCI6NywiaWF0IjoxNzc3NDA5ODkzfQ.DqFu0-Kc_NOQ-hwvbXp-uBsEzqUQGXkBWZx__-5V4yc
 
 {
-    "title": "To Not Be Deleted",
+    "title": "Adding trash to be deleted",
     "author": "Weirdo",
-    "url": "fullstackisfun.com"
+    "url": "asdasd.com",
+    "year": 2022
 }

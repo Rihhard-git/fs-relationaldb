@@ -1,23 +1,10 @@
 const { Op } = require('sequelize')
 const router = require('express').Router()
-const jwt = require('jsonwebtoken')
-const { SECRET } = require('../util/config')
-const { Blog, User } = require('../models')
+const { Blog, User, Session } = require('../models')
 const { sequelize } = require('../util/db')
+const { tokenExtractor } = require('../util/middlewares')
 
-const tokenExtractor = (req, res, next) => {
-    const authorization = req.get('authorization')
-    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-        try {
-            req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-        } catch {
-            return res.status(401).json({ error: 'token invalid'})
-        }
-    } else {
-        return res.status(401).json({ error: 'token missing'})
-    }
-    next()
-}
+
 
 const blogFinder = async (req, res, next) => {   
 
@@ -30,8 +17,6 @@ const blogFinder = async (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-
-    console.log('testing some testing ')
 
     let where = {}
 
@@ -64,11 +49,19 @@ router.post('/', tokenExtractor, async (req, res, next) => {
 
     try {
         const user = await User.scope('withoutPassword').findByPk(req.decodedToken.id)
-        const blog = await Blog.create({...req.body, userId: user.id})
-        res.json(blog)
+        const session = await Session.findOne({ where: {userId: req.decodedToken.id}})
+
+        if (user && session !== null && session.userId === user.id) {
+            const blog = await Blog.create({...req.body, userId: user.id})
+            res.json(blog) 
+        
+        } else {
+            return res.status(401).json({ error: 'unauthorized credentials for adding blog' })
+        }
+
     } catch (error) {
         next(error)
-        return res.status(400).json({ error })
+        return res.status(401).json({ error })
         
     }
 
@@ -93,15 +86,16 @@ router.delete('/:id', blogFinder, tokenExtractor, async (req, res, next) => {
 
     try {
         const user = await User.scope('withoutPassword').findByPk(req.decodedToken.id)
-            if (user.id === req.blog.userId) {
+        const session = await Session.findOne({ where: {userId: req.decodedToken.id}})
+            if (user.id === req.blog.userId && session !== null && session.userId === user.id) {
                 await req.blog.destroy()
                 return res.status(204).send({ success: 'delete was successfull'})
             } else {
-                return res.status(400).send({ error: 'wrong credentials for delete'})
+                return res.status(401).send({ error: 'unauthorized credentials for delete'})
             }
     } catch (error){
         next(error)
-        return res.status(400).json({ error })
+        return res.status(401).json({ error })
     }  
 })
 

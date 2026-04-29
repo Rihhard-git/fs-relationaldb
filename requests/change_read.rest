@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/readinglists/84
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxQGV4YW1wbGUuY29tIiwiaWQiOjE3MSwiaWF0IjoxNzc3NDkyMDMyfQ.ohEyXrEpHjcSkobLNpl6GzJkPk_GMY8urB9JPmJqazU
+
+{
+  "read": true
+}

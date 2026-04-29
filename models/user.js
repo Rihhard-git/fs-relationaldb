@@ -25,11 +25,22 @@ User.init({
     passwordHash: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    disabled: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
     }, {
     sequelize,
     underscored: true,
-    timestamps: true,
     modelName: 'user',
     scopes: {
         withoutPassword: {

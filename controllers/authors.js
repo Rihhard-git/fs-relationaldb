@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
 
     const authors = await Blog.findAll({
         attributes: { 
-            exclude: ['userId', 'title', 'url', 'id', 'likes'],
+            exclude: ['userId', 'title', 'url', 'id', 'likes', 'year', 'createdAt', 'updatedAt'],
             include: [
                 [sequelize.fn('COUNT', sequelize.col('*')), 'blogs'],
                 [sequelize.fn('SUM', sequelize.col('likes')), 'likes']

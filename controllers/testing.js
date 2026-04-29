@@ -1,5 +1,5 @@
 const { sequelize } = require('../util/db')
-const { User, Blog } = require('../models')
+const { User, Blog, Session, ReadingList } = require('../models')
 
 const router = require('express').Router()
 
@@ -9,8 +9,11 @@ router.get('/', (req, res) => {
 
 router.post('/api/reset', async (req, res) => {
 
-    await sequelize.drop()
-    await sequelize.sync({ force: true})
+    await Session.destroy({ truncate: { cascade: true}})
+    await ReadingList.destroy({ truncate: { cascade: true}})
+    await Blog.destroy({ truncate: { cascade: true}})
+    await User.destroy({ truncate: { cascade: true}})
+
     res.status(204).send('ok')
 })
 

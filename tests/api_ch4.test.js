@@ -39,9 +39,10 @@ describe('Reading Lists API', () => {
     
     const response = await axios.post(`${baseUrl}/readinglists`, readingListEntry)
     
+    //changed response toBe camelcase...
     assert.ok([200, 201].includes(response.status))
-    assert.strictEqual(response.data.blog_id, createdBlogId)
-    assert.strictEqual(response.data.user_id, testData.users[0].id)
+    assert.strictEqual(response.data.blogId, createdBlogId)
+    assert.strictEqual(response.data.userId, testData.users[0].id)
     assert.strictEqual(response.data.read, false)
   })
   
@@ -368,7 +369,7 @@ describe('Integration: Reading Lists and Sessions', () => {
   
   it('create blog and add to reading list', async () => {
     integrationToken = await login('test2@example.com', 'password456')
-    
+
     const newBlog = {
       title: 'Integration Test Blog',
       author: 'Integration Author',
@@ -378,17 +379,19 @@ describe('Integration: Reading Lists and Sessions', () => {
     const blogResponse = await axios.post(`${baseUrl}/blogs`, newBlog, {
       headers: { Authorization: `Bearer ${integrationToken}` }
     })
+
     integrationBlogId = blogResponse.data.id
-    
+   
     const readingListEntry = {
       blogId: integrationBlogId,
       userId: testData.users[1].id
     }
     
     const response = await axios.post(`${baseUrl}/readinglists`, readingListEntry)
-    
+
+    // changed response.data.blog_id to ..blogId <- thats what my backend returns.
     assert.ok([200, 201].includes(response.status))
-    assert.strictEqual(response.data.blog_id, integrationBlogId)
+    assert.strictEqual(response.data.blogId, integrationBlogId)
     integrationReadingListId = response.data.id
   })
   
